@@ -15,9 +15,9 @@ class Testhrm:
         sts=self.driver.find_element(By.XPATH,'//*[@id="app"]/div[1]/div/div[1]/div/div[1]/img').is_displayed()
         time.sleep(3)
         if sts==True:
-            assert True
+            assert false
         else:
-            assert False
+            assert True
         self.driver.close()
     @allure.severity(severity_level='NORMAL')
     def test_listemp(self):
