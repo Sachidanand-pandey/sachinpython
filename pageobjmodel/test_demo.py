@@ -20,14 +20,13 @@ class Testhrm():
         self.driver.get('http://tutorialsninja.com/demo/')
         time.sleep(4)
         actual_tittle=self.driver.title
-        if actual_tittle == 'Your Story':
+        if actual_tittle == 'Your Store':
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(), name="verifytittle", attachment_type=AttachmentType.PNG)
             print('test case is fail')
             assert False
-
-    @allure.severity(severity_level='MINOR')
+    @allure.severity(severity_level='MAJOR')
     def test_login(self,setup):
         self.driver.get('http://tutorialsninja.com/demo/')
         time.sleep(4)
@@ -62,3 +61,21 @@ class Testhrm():
             allure.attach(self.driver.get_screenshot_as_png(), name="verifyprice", attachment_type=AttachmentType.PNG)
         else:
             assert False
+
+    @allure.severity(severity_level='CRITICAL')
+    def test_verify(self, setup):
+        self.driver.get('http://tutorialsninja.com/demo/')
+        time.sleep(2)
+        a=self.driver.find_element(By.XPATH,'//nav[@id="menu"]/div[2]/ul/li[2]/a')
+        a.click()
+        time.sleep(4)
+        b=self.driver.find_element(By.XPATH,"//a[text()='Show All Laptops & Notebooks']")
+        b.click()
+        time.sleep(4)
+        c=self.driver.find_element(By.XPATH,'//i[@class="fa fa-th-list"]')
+        c.click()
+        time.sleep(4)
+        d=self.driver.find_element(By.XPATH,'//*[@id="content"]/div[4]/div[3]/div/div[2]/div[2]/button[1]')
+        d.click()
+        time.sleep(3)
+
