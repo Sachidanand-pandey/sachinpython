@@ -20,7 +20,7 @@ class Testhrm():
         self.driver.get('http://tutorialsninja.com/demo/')
         time.sleep(4)
         actual_tittle=self.driver.title
-        if actual_tittle == 'Your Store':
+        if actual_tittle == 'Your Story':
             assert True
         else:
             allure.attach(self.driver.get_screenshot_as_png(), name="verifytittle", attachment_type=AttachmentType.PNG)
@@ -78,4 +78,13 @@ class Testhrm():
         d=self.driver.find_element(By.XPATH,'//*[@id="content"]/div[4]/div[3]/div/div[2]/div[2]/button[1]')
         d.click()
         time.sleep(3)
+        e=self.driver.find_element(By.XPATH,'//span[@id="cart-total"]')
+        e.click()
+        f=self.driver.find_element(By.XPATH,'//td[@class="text-left"]/a')
+        g=f.text
+        print(g)
+        if g == 'MacBook Air':
+            assert True
+        else:
+            assert False
 
