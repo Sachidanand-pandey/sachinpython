@@ -16,6 +16,10 @@ class Testhrm():
         self.driver.close()
 
     @allure.severity(severity_level='MINOR')
+    @allure.feature('verify the title of the page')
+    @allure.story('first test case')
+    @allure.description('in this we verify the tittle of the page')
+    @allure.step('go to the page and verify the title of the page')
     def test_homepagetitle(self,setup):
         self.driver.get('http://tutorialsninja.com/demo/')
         time.sleep(4)
@@ -27,6 +31,10 @@ class Testhrm():
             print('test case is fail')
             assert False
     @allure.severity(severity_level='MAJOR')
+    @allure.feature('verify the cart price')
+    @allure.story('second test case')
+    @allure.description('in this we add the product into cart and verify the price')
+    @allure.step('go to the page and add the product to the cart and verify the price of the product are same')
     def test_login(self,setup):
         self.driver.get('http://tutorialsninja.com/demo/')
         time.sleep(4)
@@ -63,6 +71,10 @@ class Testhrm():
             assert False
 
     @allure.severity(severity_level='CRITICAL')
+    @allure.feature('verify the mackbook')
+    @allure.story('third test case')
+    @allure.description('in this we add the product into cart and verify the same product in the cart or not')
+    @allure.step('go to the page and add the product into the cart and verify the same product in the cart')
     def test_verify(self, setup):
         self.driver.get('http://tutorialsninja.com/demo/')
         time.sleep(2)
@@ -85,6 +97,33 @@ class Testhrm():
         print(g)
         if g == 'MacBook Air':
             assert True
+            allure.attach(self.driver.get_screenshot_as_png(), name="verifcart", attachment_type=AttachmentType.PNG)
         else:
             assert False
+
+    @allure.severity(severity_level='CRITICAL')
+    @allure.feature('verify the tablets')
+    @allure.story('fourth test case')
+    @allure.description('in this we add the product into cart and verify the same product in the cart or not')
+    @allure.step('go to the page and add the product into the cart and verify the same product in the cart')
+    def test_tablets(self,setup):
+        self.driver.get('http://tutorialsninja.com/demo/')
+        time.sleep(4)
+        a=self.driver.find_element(By.XPATH,"//a[text()='Tablets']")
+        a.click()
+        time.sleep(4)
+        b=self.driver.find_element(By.XPATH,'//*[@id="content"]/div[2]/div/div/div[2]/div[2]/button[1]')
+        b.click()
+        time.sleep(3)
+        c=self.driver.find_element(By.XPATH,'//span[@id="cart-total"]')
+        c.click()
+        time.sleep(3)
+        d=self.driver.find_element(By.XPATH,'//*[@id="cart"]/ul/li[1]/table/tbody/tr/td[2]/a')
+        e=d.text
+        print(e)
+        if e=='Samsung Galaxy Tab 10.1':
+            assert True
+        else:
+            assert False
+
 
