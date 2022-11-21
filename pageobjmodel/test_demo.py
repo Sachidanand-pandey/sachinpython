@@ -127,3 +127,18 @@ class Testhrm():
         else:
             assert False
 
+    @allure.severity(severity_level='CRITICAL')
+    @allure.feature('verify the tablets')
+    @allure.story('fourth test case')
+    @allure.description('in this we add the product into cart and verify the same product in the cart or not')
+    @allure.step('go to the page and add the product into the cart and verify the same product in the cart')
+    def test_camera(self):
+        self.driver.get('http://tutorialsninja.com/demo/')
+        time.sleep(2)
+        self.driver.find_element(By.XPATH,"//a[text()='Cameras']")
+        time.sleep(2)
+        a=self.driver.find_element(By.XPATH,'//*[@id="content"]/div[2]/div[2]/div/div[2]/div[2]/button[1]')
+        a.click()
+        b=self.driver.find_element(By.XPATH,'//span[@id="cart-total"]')
+        b.click()
+
