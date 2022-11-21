@@ -128,8 +128,8 @@ class Testhrm():
             assert False
 
     @allure.severity(severity_level='CRITICAL')
-    @allure.feature('verify the tablets')
-    @allure.story('fourth test case')
+    @allure.feature('verify the camera')
+    @allure.story('fifth test case')
     @allure.description('in this we add the product into cart and verify the same product in the cart or not')
     @allure.step('go to the page and add the product into the cart and verify the same product in the cart')
     def test_camera(self):
@@ -141,4 +141,14 @@ class Testhrm():
         a.click()
         b=self.driver.find_element(By.XPATH,'//span[@id="cart-total"]')
         b.click()
+        time.sleep(3)
+        c=self.driver.find_element(By.XPATH,'//*[@id="cart"]/ul/li[1]/table/tbody/tr/td[2]/a')
+        d=c.text
+        print(d)
+        if d=='Nikon D300':
+            assert True
+            allure.attach(self.driver.get_screenshot_as_png(), name='verifycam', attachment_type=AttachmentType.PNG)
+        else:
+            assert False
+
 
