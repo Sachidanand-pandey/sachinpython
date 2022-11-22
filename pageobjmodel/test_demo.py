@@ -127,28 +127,56 @@ class Testhrm():
         else:
             assert False
 
-    @allure.severity(severity_level='CRITICAL')
-    @allure.feature('verify the camera')
+    @allure.severity(severity_level='MAJOR')
+    @allure.feature('verify the cam')
     @allure.story('fifth test case')
     @allure.description('in this we add the product into cart and verify the same product in the cart or not')
     @allure.step('go to the page and add the product into the cart and verify the same product in the cart')
-    def test_camera(self):
+    def test_phone(self,setup):
         self.driver.get('http://tutorialsninja.com/demo/')
         time.sleep(2)
-        self.driver.find_element(By.XPATH,"//a[text()='Cameras']")
-        time.sleep(2)
+        self.driver.find_element(By.XPATH,"//a[text()='Phones & PDAs']").click()
+        time.sleep(4)
         a=self.driver.find_element(By.XPATH,'//*[@id="content"]/div[2]/div[2]/div/div[2]/div[2]/button[1]')
         a.click()
-        b=self.driver.find_element(By.XPATH,'//span[@id="cart-total"]')
+        time.sleep(4)
+        b=self.driver.find_element(By.XPATH,'//*[@id="cart-total"]')
         b.click()
         time.sleep(3)
         c=self.driver.find_element(By.XPATH,'//*[@id="cart"]/ul/li[1]/table/tbody/tr/td[2]/a')
         d=c.text
         print(d)
-        if d=='Nikon D300':
+        if d=='iPhone':
             assert True
             allure.attach(self.driver.get_screenshot_as_png(), name='verifycam', attachment_type=AttachmentType.PNG)
         else:
             assert False
+
+    @allure.severity(severity_level='MAJOR')
+    @allure.feature('verify the cam')
+    @allure.story('fifth test case')
+    @allure.description('in this we add the product into cart and verify the same product in the cart or not')
+    @allure.step('go to the page and add the product into the cart and verify the same product in the cart')
+    def test_camera(self, setup):
+        self.driver.get('http://tutorialsninja.com/demo/')
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, '//*[@id="menu"]/div[2]/ul/li[7]/a').click()
+        time.sleep(4)
+        a = self.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[2]/div/div[2]/div[2]/button[1]')
+        a.click()
+        time.sleep(4)
+        b = self.driver.find_element(By.XPATH, '//*[@id="cart-total"]')
+        b.click()
+        time.sleep(3)
+        c = self.driver.find_element(By.XPATH, '//*[@id="cart"]/ul/li[1]/table/tbody/tr/td[2]/a')
+        d = c.text
+        print(d)
+        if d == 'Nikon D300':
+            assert True
+            allure.attach(self.driver.get_screenshot_as_png(), name='verifycam', attachment_type=AttachmentType.PNG)
+        else:
+            assert False
+
+
 
 
