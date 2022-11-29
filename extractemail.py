@@ -1,31 +1,69 @@
-import imaplib
-import email
-import yaml
-with open("credentials.yml") as f:
-    content = f.read()
-my_credentials = yaml.load(content, Loader=yaml.FullLoader)
-user, password = my_credentials["user"], my_credentials["password"]
-imap_url = 'imap.gmail.com'
-my_mail = imaplib.IMAP4_SSL(imap_url)
-my_mail.login(user, password)
-my_mail.select('Inbox')
-key = 'FROM'
-value = 'bnsreenu@hotmail.com'
-_, data = my_mail.search(None, key, value)
-mail_id_list = data[0].split()
-msgs = []
-for num in mail_id_list:
-    typ, data = my_mail.fetch(num, '(RFC822)')
-    msgs.append(data)
-for msg in msgs[::-1]:
-    for response_part in msg:
-        if type(response_part) is tuple:
-            my_msg = email.message_from_bytes((response_part[1]))
-            print("_________________________________________")
-            print("subj:", my_msg['subject'])
-            print("from:", my_msg['from'])
-            print("body:")
-            for part in my_msg.walk():
-                # print(part.get_content_type())
-                if part.get_content_type() == 'text/plain':
-                    print(part.get_payload())
+import imaplib,email
+import time
+import datetime as dt
+from os import path
+from datetime import timezone
+
+user="sachinbst41@gmail.com"
+password="utkarsh@123"
+imap_url ="imap.gmail.com"
+
+def get_body(msg):
+    if msg.is_multipart():
+        return get_body(msg.get_payload(0))
+    else:
+        return msg.get_payload(None,True)
+date_time = dt.datetime.now()
+f=open("gmail_time.txt","r")
+a=f.read()
+f.close()
+
+a= dt.datetime.strptime(a,'%a,%d,%b,%Y,%H:%M:%S %Z')
+
+date_time.replace(tzinfo=timezone.utc)
+
+date_time=date_time.replace(tzinfo=timezone.utc).isoformat()
+
+date_time=dt.datetime.strptime(date_time,'%Y-%m-%dT%H:%M:%S.%f%z')
+
+lastDayDateTime = date_time -a
+
+con = imaplib.IMAP4_SSL(imap_url)
+con.login(user,password)
+con.select('INBOX')
+dates = (dt.datetime.now()-lastDayDateTime).strptime('%d-%b-%Y')
+resp,items = con.uid('search', None,'(SENTSINCE {date})'.format(date=dates))
+a = items
+b=a[0].decode('utf-8')
+b=b.split(" ")
+f1= open("gmail_mails.txt","w+")
+
+for value in b:
+    late=int(value)-801
+    late =str(late)
+    result,data =con.fetch(late,'(RFC822)')
+    raw = email.message_from_bytes(data[0][1])
+    print(raw['Date'])
+    print(raw['From'])
+    print(raw['Body'])
+    f1.write('Date = '+ raw['Date'] + ' ')
+    f1.write('From = '+ raw['From'] + ' ')
+    f1.write('Subject = '+ raw['Subject'] + ' ')
+    f1.write('Body = '+ str(get_body(raw)) + ' ')
+    f1.write(' ')
+f1.close()
+f2= open("gmail_time.txt","w+")
+f2.write(raw['Date'])
+f2.close()
+
+
+
+
+
+
+
+
+
+
+
+
